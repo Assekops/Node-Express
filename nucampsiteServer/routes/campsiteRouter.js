@@ -3,7 +3,8 @@ const Campsite = require('../models/campsite');
 
 const campsiteRouter = express.Router();
 
-campsiteRouter.route('/')
+campsiteRouter
+    .route('/')
     .get((req, res, next) => {
         Campsite.find()
             .then(campsites => {
@@ -29,12 +30,12 @@ campsiteRouter.route('/')
     })
     .delete((req, res, next) => {
         Campsite.deleteMany()
-            .then(response => {
+            .then((response) => {
                 res.statusCode = 200;
                 res.setHeader('Content-Type', 'application/json');
                 res.json(response);
             })
-            .catch(err => next(err));
+            .catch((err) => next(err));
     });
 
 campsiteRouter.route('/:campsiteId')
