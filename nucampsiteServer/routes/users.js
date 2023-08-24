@@ -13,7 +13,7 @@ router.post('/signup', (req, res, next) => {
     .then(user => {
       if (user) {
         const err = new Error(`User ${req.body.username} already exists!`);
-        err.status(403);
+        err.status = 403;
         return next(err);
       } else {
         User.create({
@@ -34,6 +34,7 @@ router.post('/signup', (req, res, next) => {
 router.post('/login', (req, res, next) => {
   if (!req.session.user) {
     const authHeader = req.headers.authorization;
+
     if (!authHeader) {
       const err = new Error('You are not authenticated!');
       res.setHeader('WWW-Authenticate', 'Basic');
@@ -59,7 +60,7 @@ router.post('/login', (req, res, next) => {
           req.session.user = 'authenticated';
           res.statusCode = 200;
           res.setHeader('Content-Type', 'text/plain');
-          res.end('You are already authenticated!');
+          res.end('You are authenticated!')
         }
       })
       .catch(err => next(err));
@@ -71,7 +72,7 @@ router.post('/login', (req, res, next) => {
 });
 
 router.get('/logout', (req, res, next) => {
-  if (res.session) {
+  if (req.session) {
     req.session.destroy();
     res.clearCookie('session-id');
     res.redirect('/');
