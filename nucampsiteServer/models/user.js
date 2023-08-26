@@ -8,7 +8,7 @@ const userSchema = new Schema({
         type: String,
         default: ''
     },
-    flastname: {
+    lastname: {
         type: String,
         default: ''
     },

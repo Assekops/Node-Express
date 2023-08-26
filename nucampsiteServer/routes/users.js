@@ -63,4 +63,22 @@ router.get('/logout', (req, res, next) => {
   }
 });
 
+//
+router.get('/users', (req, res, next) => {
+  if (req.user.admin) {
+    User.find()
+      .then((users) => {
+        res.statusCode = 200;
+        res.setHeader("Content-Type", "application/json");
+        res.json(users);
+      })
+      .catch((err) => next(err));
+  } else {
+    const err = new Error("You are not authorized to perform this operation ");
+    err.status = 403;
+    return next(err);
+  }
+
+});
+
 module.exports = router;
