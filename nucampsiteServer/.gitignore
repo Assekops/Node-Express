@@ -2,3 +2,4 @@ node_modules
 sessions
 /bin
 public/images
+/config.js
